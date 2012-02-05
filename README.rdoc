@@ -1,8 +1,54 @@
-= Minmial shopping cart w/o dependencies
+== Minicart: simple shopping cart w/o dependencies
 
-== Description
+Minicart is a simple shopping cart w/o dependecies written in Ruby
 
-== Usage
+== Installation
+
+  gem install minicart
+
+== Example
+
+  require 'rubygems'
+  require 'minicart'
+
+  # Create some products (just for presentation)
+  class Product
+    attr_accessor :sku, :name, :price
+
+    def initialize(sku, name, price)
+      @sku, @name, @price = sku, name, price
+    end
+  end
+
+  ipad2 = Product.new('ipad2', 'Apple Ipad 2', 500)
+  ipod3 = Product.new('ipod3', 'Apple Ipod 3rd Gen', 400)
+  iphone4 = Product.new('iph4', 'Apple Iphone 4', 800)
+
+  # You can use minicart like this
+  cart = Minicart::Cart.new
+  ipod3_id = cart.add_product ipod3
+  iphone4_id = cart.add_product iphone4
+  ipad2_id = cart.add_product ipad2
+  cart.add_product ipod3
+
+  cart.remove ipad2_id
+  cart.update_quantity(iphone4_id, 5)
+
+  # check result
+  assert_equal 7, cart.count_items
+  assert_equal %w[ipod3 iph4], cart.items.map{ |item| item.product.sku }
+  assert_equal 5, cart.item(iphone4_id).quantity
+  assert_equal 400, cart.item(ipod3_id).product.price
+
+  # You can store any object in cart
+  # for example: hashes or strings
+  cart = Minicart::Cart.new
+
+  id1 = cart.add_product({'name'=>'Windows', 'price'=>100})
+  assert_equal 100, cart.item(id1).product['price']
+
+  id2 = cart.add_product 'Love Linux'
+  assert_equal 'Love Linux', cart.item(id2).product
 
 == Author
 

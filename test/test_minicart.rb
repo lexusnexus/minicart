@@ -99,6 +99,16 @@ describe 'Cart' do
     assert_equal %w[ipod3 iph4], cart.items.map{ |item| item.product.sku }
     assert_equal 5, cart.item(iphone4_id).quantity
     assert_equal 400, cart.item(ipod3_id).product.price
+ 
+    # You can store any object in cart as product
+    # for example: hashes or strings
+    cart = Minicart::Cart.new
+
+    id1 = cart.add_product({'name'=>'Windows', 'price'=>100})
+    assert_equal 100, cart.item(id1).product['price']
+
+    id2 = cart.add_product 'Love Linux'
+    assert_equal 'Love Linux', cart.item(id2).product
   end
 end
 
