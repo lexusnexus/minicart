@@ -1,0 +1,9 @@
+= Minmial shopping cart w/o dependencies
+
+== Description
+
+== Usage
+
+== Author
+
+Alex Boreysha gorizvezda@gmail.com
