@@ -35,20 +35,22 @@ Minicart is a simple shopping cart w/o dependecies written in Ruby
   cart.update_quantity(iphone4_id, 5)
 
   # check result
-  assert_equal 7, cart.count_items
-  assert_equal %w[ipod3 iph4], cart.items.map{ |item| item.product.sku }
-  assert_equal 5, cart.item(iphone4_id).quantity
-  assert_equal 400, cart.item(ipod3_id).product.price
+  cart.count_items                          # => 7
+  cart.items.map{ |item| item.product.sku } # => ["ipod3", "iph4"]
+  cart.item(iphone4_id).quantity            # => 5
+  cart.item(ipod3_id).product.price         # => 400
 
   # You can store any object in cart
   # for example: hashes or strings
   cart = Minicart::Cart.new
 
   id1 = cart.add_product({'name'=>'Windows', 'price'=>100})
-  assert_equal 100, cart.item(id1).product['price']
+  cart.item(id1).product['price']           # => 100
 
   id2 = cart.add_product 'Love Linux'
-  assert_equal 'Love Linux', cart.item(id2).product
+  cart.item(id2).product                    # => "Love Linux"
+
+  cart.count_items                          # => 2
 
 == Author
 
